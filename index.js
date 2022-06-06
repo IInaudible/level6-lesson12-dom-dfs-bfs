@@ -11,6 +11,27 @@ function domDFS(node, tagTarget, visitedNodes=[], results=[]) {
 	return results
 }
 
+function domIterativeDFS(node, tagTarget) {
+	const vistedNodes = [];
+	const results = [];
+	const stack = [node];
+
+	while (stack.length !== 0) {
+		node = stack.pop()
+		if (node !== null && !vistedNodes.includes(node)) {
+			vistedNodes.push(node)
+			if (node.tagName && node.tagName.toLowerCase() === tagTarget.toLowerCase()) {
+				results.push(node)
+			}
+			for (let child of node.children) {
+				stack.push(child);
+			}
+		}
+	}
+
+	return results
+}
+
 // First, let’s convert the following Recursive Depth-First Search function into
 //   an Iterative one using an array as a stack.
 
@@ -30,6 +51,27 @@ function domDFS(node, tagTarget, visitedNodes=[], results=[]) {
 // 8) Use the "domIterativeDFS" function in our console log (at the bottom)
 //    instead of "domDFS" and ensure it works the same way
 
+function domIterativeBFS(node, tagTarget) {
+	const vistedNodes = [];
+	const results = [];
+	const queue = [node];
+
+	while (queue.length !== 0) {
+		node = queue.shift()
+		if (node !== null && !vistedNodes.includes(node)) {
+			vistedNodes.push(node)
+			if (node.tagName && node.tagName.toLowerCase() === tagTarget.toLowerCase()) {
+				results.push(node)
+			}
+			for (let child of node.children) {
+				queue.push(child);
+			}
+		}
+	}
+
+	return results
+}
+
 // Second, let's create a Breadth-First Search function
 
 // 1) Copy the Iterative Depth-First Search function created above, and
@@ -47,3 +89,5 @@ function domDFS(node, tagTarget, visitedNodes=[], results=[]) {
 // repo to the activity on your online classroom.
 
 console.log(domDFS(document.querySelector('body'), 'p').map(node => node.textContent));
+console.log("")
+console.log(domIterativeBFS(document.querySelector('body'), 'p').map(node => node.textContent));
